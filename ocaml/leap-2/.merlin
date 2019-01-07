@@ -1,0 +1,10 @@
+B _build/default
+FLG -w -40
+PKG base
+PKG base.caml
+PKG base.shadow_stdlib
+PKG bytes
+PKG oUnit
+PKG oUnit.advanced
+PKG sexplib0
+PKG unix

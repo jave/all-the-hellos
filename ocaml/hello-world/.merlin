@@ -1,0 +1,17 @@
+B /home/joakim/.opam/default/lib/base
+B /home/joakim/.opam/default/lib/base/caml
+B /home/joakim/.opam/default/lib/base/shadow_stdlib
+B /home/joakim/.opam/default/lib/bytes
+B /home/joakim/.opam/default/lib/oUnit
+B /home/joakim/.opam/default/lib/sexplib0
+B /usr/lib64/ocaml
+B _build/default/.test.eobjs
+FLG -w -40
+S .
+S /home/joakim/.opam/default/lib/base
+S /home/joakim/.opam/default/lib/base/caml
+S /home/joakim/.opam/default/lib/base/shadow_stdlib
+S /home/joakim/.opam/default/lib/bytes
+S /home/joakim/.opam/default/lib/oUnit
+S /home/joakim/.opam/default/lib/sexplib0
+S /usr/lib64/ocaml
