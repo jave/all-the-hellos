@@ -1,0 +1,3 @@
+My programming exercises.
+
+exercism and other exercises
