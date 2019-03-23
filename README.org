@@ -1,3 +1,12 @@
-My programming exercises.
+My programming exercises
 
-exercism and other exercises
+- Exercism 
+
+- Project Euler
+
+and other exercises and research I do occasionally.
+
+Usually each project does a single thing, except when thats tedious to
+achieve.
+
+Sometimes I make a blog post about the project.
