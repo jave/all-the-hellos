@@ -1,0 +1,45 @@
+* snapscape
+
+Snap is an interesting javascript animation library for scalable vector graphics.
+
+http://snapsvg.io/
+
+Snap has plenty of slick demonstrations.
+
+My example, snapscape, is in typical hello-world fashion stripped to the bare minimum.
+It features:
+
+- An Inkscape drowing with a backdrop, a box and a sun.
+- The minimum plumbing you need ta make Snap work
+- some client code that uses Snap to find the box and the sun and make them draggable
+
+Clone the code and load the htm in Firefox. Chrome is more paranoid
+with regards to the origin of the data, so it won't allow local files.
+
+
+** Issues
+While working on the example I noticed some issues.
+
+The only structure that seems to work reliably is to have an svg
+embedded verbatim inside a html file.
+
+This is a bit inconvenient, because Inkscape can only edit separate
+svg files, therefore I tried to find a workaround, that didn't need server
+side logic, which would also be inconvenient.
+
+- Snap.load("file.svg") works to a degree, but gradients are not rendered properly.
+
+- linking snap.js from inside the svg file doesnt work because Snap
+  needs a body tag, which there isnt in a svg file
+
+- linking the svg from html with an embedd tag, and then wrapping dom
+  objects with Snap, is also buggy.
+
+var sun =  Snap(document.getElementById("svgcontainer").contentDocument.getElementById("sun"));
+
+So, the enly thing that actually works is expanding the svg inside the
+html. Then you need a server side script, or a build step (or perhaps a
+non-free svg editor, but non-free is not my thing)
+
+
+
