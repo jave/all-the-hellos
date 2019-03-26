@@ -1,0 +1,1 @@
+web: java -cp target/uberjar/buddyhello.jar clojure.main -m buddyhello.core

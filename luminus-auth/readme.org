@@ -1,0 +1,21 @@
+lein new luminus buddyhello  +auth
+
+          (wrap-routes middleware/wrap-restricted)
+home route now restricted, with session auth.
+
+in this case i want api key auth, in http header.
+
+
+https://funcool.github.io/buddy-auth/latest/#_authentication
+
+seems i want token auth.
+
+curl -v -X GET -H "Content-Type: application/json" -H "Authorization: Token 2f904e245c1f5" http://localhost:3000/
+
+but i want -H "api-key: 2f904e245c1f5"
+
+https://github.com/funcool/buddy-auth/blob/master/src/buddy/auth/backends/token.clj
+
+
+hacked a api-key buddy backend, this now works:
+curl -v -X GET -H "Content-Type: application/json" -H "api-key: 111" http://localhost:3000/
