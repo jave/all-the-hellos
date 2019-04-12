@@ -1,0 +1,109 @@
+ flycheck newer works properly for me.
+ its infuriating!
+
+ this file is just a regression test
+
+ http://blog.podsnap.com/squiggly.html
+
+all i ever get is this crap:
+
+error in process filter: Wrong number of arguments: (4 . 4), 0 [2 times]
+
+https://github.com/jonase/eastwood/blob/master/cases/testcases/f01.clj
+
+
+(flycheck-clojure-setup)
+
+
+(defun flycheck-clojure-setup ()
+  "Setup Flycheck for Clojure."
+  (interactive)
+  ;; Add checkers in reverse order, because `add-to-list' adds to front.
+  (dolist (checker '(clojure-cider-typed
+                     clojure-cider-kibit
+                     clojure-cider-eastwood))
+    (add-to-list 'flycheck-checkers checker))
+  (flycheck-clojure-inject-jack-in-dependencies))
+
+
+(defun flycheck-clojure-inject-jack-in-dependencies ()
+  "Inject the REPL dependencies of flycheck-clojure at `cider-jack-in'.
+If injecting the dependencies is not preferred set `flycheck-clojure-inject-dependencies-at-jack-in' to nil."
+  (when (and flycheck-clojure-inject-dependencies-at-jack-in
+             (boundp 'cider-jack-in-dependencies))
+    (cider-add-to-alist 'cider-jack-in-dependencies "acyclic/squiggly-clojure" flycheck-clojure-dep-version)
+    (cider-add-to-alist 'cider-jack-in-dependencies-exclusions "acyclic/squiggly-clojure" '("org.clojure/tools.reader"))))
+
+cider-jack-in-dependencies
+cider-jack-in-dependencies-exclusions
+
+
+m-x nrepl-toggle-message-logging
+
+goto nrepl messages buffer
+
+(-->
+  id         "30"
+  op         "eval"
+  session    "8369b182-1e52-445f-b143-fb5f08e96085"
+  time-stamp "2019-04-05 20:48:52.346286264"
+  code       "(do (require 'squiggly-clojure.core) (squiggly-clojure.core/check-ew 'queen-attack))"
+)
+(<--
+  id         "30"
+  session    "8369b182-1e52-445f-b143-fb5f08e96085"
+  time-stamp "2019-04-05 20:48:52.415195916"
+  err        "Syntax error (FileNotFoundException) compiling at (reader.clj:1:1).
+Could not locate clojure/tools/reader__init.class, clojure/tools/reader.clj or clojure/tools/reader.cljc on classpath.
+"
+)
+(<--
+  id         "30"
+  session    "8369b182-1e52-445f-b143-fb5f08e96085"
+  time-stamp "2019-04-05 20:48:52.415870925"
+  ex         "class clojure.lang.Compiler$CompilerException"
+  root-ex    "class clojure.lang.Compiler$CompilerException"
+  status     ("eval-error")
+)
+
+i can recreate in the cider repl
+(do (require 'squiggly-clojure.core) (squiggly-clojure.core/check-ew 'queen-attack))
+Syntax error (FileNotFoundException) compiling at (reader.clj:1:1).
+Could not locate clojure/tools/reader__init.class, clojure/tools/reader.clj or clojure/tools/reader.cljc on classpath.
+
+https://github.com/clojure/tools.reader/
+
+
+
+https://github.com/clojure-emacs/squiggly-clojure/
+
+m-x package-install flycheck-clojure
+M-x package-install flycheck-pos-tip
+
+
+[2019-04-05 fre] discovered a workaround!
+add to project.clj
+                 [org.clojure/tools.reader "1.3.2"] ;;jave debug 
+then in the cider repl  (require 'squiggly-clojure.core) will not
+generate an error now.
+
+related message:
+[nREPL] Starting server via /home/joakim/bin/lein update-in :dependencies conj \[acyclic/squiggly-clojure\ \"0.1.9-SNAPSHOT\"\ \:exclusions\ \[org.clojure/tools.reader\]\] -- update-in :dependencies conj \[nrepl\ \"0.6.0\"\] -- update-in :plugins conj \[cider/cider-nrepl\ \"0.22.0-SNAPSHOT\"\] -- repl :headless :host localhost...
+
+whats this dupposed to do?
+:exclusions\ \[org.clojure/tools.reader\
+
+
+
+(defun flycheck-clojure-inject-jack-in-dependencies ()
+  "Inject the REPL dependencies of flycheck-clojure at `cider-jack-in'.
+If injecting the dependencies is not preferred set `flycheck-clojure-inject-dependencies-at-jack-in' to nil."
+  (when (and flycheck-clojure-inject-dependencies-at-jack-in
+             (boundp 'cider-jack-in-dependencies))
+    (cider-add-to-alist 'cider-jack-in-dependencies "acyclic/squiggly-clojure" flycheck-clojure-dep-version)
+    (cider-add-to-alist 'cider-jack-in-dependencies-exclusions
+  "acyclic/squiggly-clojure" ;; JAVE debug '("org.clojure/tools.reader")
+)))
+
+
+(setq cider-jack-in-dependencies-exclusions ''(("acyclic/squiggly-clojure")) )
