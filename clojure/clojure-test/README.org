@@ -1,0 +1,94 @@
+* the general idea
+we wanted to separate integration tests and unit tests.
+
+[2019-04-16 tis] there is a limitation in clojure.test such that test
+fixtures run even if it the corresponding integration tests are
+configured not to run.
+
+here i explore various potential workarounds.
+
+[2019-04-18 tor] all testrunners so far examined, lein test,
+circleci.test, kaocha, seem to have more or less the same approach
+regarding fixtures. 
+
+id like to have more control when to skip fixtures. id like to mix
+test types in a namespace. essentially i want to be able to mix all
+test types in a single namespace, and bind fixtures by metadata rather
+than which namespace the fixture occurs in. this is perhaps
+unreasonable.
+
+
+
+** minimal compojure test
+the idea was to make a minimal example to find a pattern for
+integration tests with compojure-api, where integration tests could be
+toggled. the main code base had some issues with this.
+
+start from scratch:
+
+lein new compojure-api my-api +clojure-test
+
+out of the box, lein test breaks:
+
+Exception in thread "main" Syntax error compiling deftype* at (flatland/ordered/set.clj:19:1).
+
+seems to be jdk 11 related. this was fixed in org.flatland/ordered
+1.5.7 it seems. atm 1.5.3 is used.
+
+lein deps :tree
+...
+ [metosin/compojure-api "1.1.11"]
+...
+   [ring-middleware-format "0.7.2"]
+     [circleci/clj-yaml "0.5.5"]
+       [org.flatland/ordered "1.5.3"]
+...
+
+switched to compojure-api 2.0.0-alpha30 to get rid of this borken dep,
+got more borken deps, and wound up with this:
+
+[metosin/compojure-api "2.0.0-alpha30"  :exclusions [ring/ring-codec commons-codec  com.fasterxml.jackson.core/jackson-core]
+
+test now passes.
+
+** minimal test
+no compojure, no anything, just figure out the use-fixture problem.
+
+lein new simple-test
+
+immediately issues with :once crop up, which is the one we want to
+use. AFAICT :once fixtures stop tests from running, and the :each
+fixtures as well.
+
+https://github.com/technomancy/leiningen/issues/1269 claims
+clojure.test is more or less unmaintained, and recomends
+https://github.com/circleci/circleci.test, which is a testrunner
+compatible with clojure.test.
+
+
+how do you compose fixtures? :Each and :once fixtures must ahve
+separate calls to use-fixture
+
+leiningen test is a self described monkeypatch, they recomend
+circleci.test. test selectors are based on the monkey patch, not
+clojure.test. reading the src for the test plugin, they jump through
+hoops to trick clojure.test to implement test selectors, so no wonder
+it is flaky.
+
+** circleci.test
+was also implemented. it can be run in several ways
+
+lein run -m circleci.test :integration simple-test.core-test
+
+test selectors seem to work better with this.
+if no tests in a name space are run, the fixtures arent run either
+which is good.
+
+
+** kaocha
+kaocha seems interesting because [2019-04-18 tor] it seems to be
+alive.
+
+lein kaocha --no-capture-output
+lein kaocha --no-capture-output --focus-meta :integration
+lein kaocha --no-capture-output --skip-meta :integration
