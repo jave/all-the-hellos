@@ -15,3 +15,4 @@ profiles.clj
 /.env
 .nrepl-port
 /log
+*.pyc
