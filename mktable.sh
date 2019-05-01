@@ -39,7 +39,9 @@ for exercise in $exercises; do
         l=$(ls $lang|grep $exercise)
         if [[ ! $l == ""  ]] ; then
             #echo -n "$lang "
-            printf "%10s:" "$lang"
+            printf "%3s:" "${lang:0:3}"
+        else
+            printf "%3s:" "   "
         fi
     done
     echo    
