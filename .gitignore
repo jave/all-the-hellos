@@ -14,5 +14,6 @@ test-config.edn
 profiles.clj
 /.env
 .nrepl-port
-/log
+log
 *.pyc
+.lein-repl-history
