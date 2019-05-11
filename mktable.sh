@@ -10,7 +10,6 @@ go
 groovy
 haskell
 java
-javascript
 julia
 kotlin
 lfe
@@ -24,9 +23,12 @@ racket
 rust
 scala
 scheme
+javascript
+
 "
 
 # all the exercises in all the langs, uniqifed, also remove lang dir name with sed
+# bug: files are also added
 exercises=$(ls $langs|sed s/.*:$//g|sort|uniq)
 
 #echo $exercises
