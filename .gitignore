@@ -17,3 +17,10 @@ profiles.clj
 log
 *.pyc
 .lein-repl-history
+.metals
+.keep
+/java/gigasecond/.classpath
+.project
+.settings
+.classpath
+gradlew.bat
