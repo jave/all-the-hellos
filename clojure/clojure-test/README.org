@@ -92,3 +92,5 @@ alive.
 lein kaocha --no-capture-output
 lein kaocha --no-capture-output --focus-meta :integration
 lein kaocha --no-capture-output --skip-meta :integration
+
+to disable integration once fixtures, a small hack is needed, see the test.
