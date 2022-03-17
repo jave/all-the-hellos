@@ -24,9 +24,9 @@ rust
 scala
 scheme
 javascript
-
+wasm
 "
-
+cd ~/pub/all-the-hellos/
 # all the exercises in all the langs, uniqifed, also remove lang dir name with sed
 # bug: files are also added
 exercises=$(ls $langs|sed s/.*:$//g|sort|uniq)
