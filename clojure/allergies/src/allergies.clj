@@ -11,4 +11,3 @@
   (contains? (into #{}(allergies num)) allergy))
 
 
-

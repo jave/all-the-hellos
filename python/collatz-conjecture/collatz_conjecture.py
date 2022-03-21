@@ -4,11 +4,25 @@
 
 # Given a number n, return the number of steps required to reach 1.
 
-
-def collatz_steps(n):
+#old one, that worked before
+# def collatz_steps(n):
+#     step=0
+#     if n<=0:
+#         raise ValueError("bad value")
+#     while not (n == 1):
+#         #print(step, n)
+#         step=step+1
+#         if n % 2 == 0: #even
+#             n = n /2
+#         else:
+#             n = n * 3 + 1
+#     return step
+        
+#some changes because exercism changed their tests
+def steps(n):
     step=0
     if n<=0:
-        raise ValueError("bad value")
+        raise ValueError("Only positive integers are allowed")
     while not (n == 1):
         #print(step, n)
         step=step+1
@@ -17,5 +31,3 @@ def collatz_steps(n):
         else:
             n = n * 3 + 1
     return step
-        
-

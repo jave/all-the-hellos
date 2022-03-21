@@ -10,3 +10,6 @@ Usually each project does a single thing, except when thats tedious to
 achieve.
 
 Sometimes I make a blog post about the project.
+
+i also started adding makefiles, for installing deps, and running
+tests uniformly for a variety of languages.
