@@ -120,6 +120,21 @@ then
                 
             fi
             ;;
+        wasm)
+            codefile=${codebasename}.wat
+            if [ $1 == "test" ]
+            then
+                npm test
+            elif [ $1 == "submit" ]
+            then
+                exercism submit $codefile
+                #echo hmm
+                #codefile=$(find src/main/java -type f)
+                #exercism submit $codefile
+                
+            fi
+            ;;
+        #wasm: npm test
 
     esac
     
