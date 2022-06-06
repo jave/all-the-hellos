@@ -1,0 +1,20 @@
+* different ways of running clojure in a shellscript
+
+a lot of stuff we do is scripting using bash, perl, cron in openshift,
+makefiles, and so on. its good to be able to mix tools.
+
+sometimes, though, you want the power of a real language
+... you want, LISP!
+
+still you want to have the entire mix of languages available to you. a
+single curl call shouldnt be hundreds of lines of java, python, or
+whatever, it should be a single curl call.
+
+so, you want lisp, but you also want shell scripting.
+
+contained here are a couple of examples how to do it.
+
+the current favorite is bash-shebang-underscore-hack.clj, because you
+use plain clojure and bash, no other dependencies.
+
+but the others are cool too, and i will expand this...
