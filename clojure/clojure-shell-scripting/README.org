@@ -18,3 +18,29 @@ the current favorite is bash-shebang-underscore-hack.clj, because you
 use plain clojure and bash, no other dependencies.
 
 but the others are cool too, and i will expand this...
+
+TODO
+
+theres a bunch of other ways with their own tradeoffs
+
+some links
+
+
+
+https://github.com/jafingerhut/dotfiles/blob/master/templates/clj-template-README.md
+
+
+    http://inlein.org/
+
+    
+    https://joker-lang.org/
+
+    https://github.com/borkdude/babashka
+
+    https://github.com/dundalek/closh
+
+
+
+    https://planck-repl.org/
+
+    
