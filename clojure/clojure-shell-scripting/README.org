@@ -23,7 +23,12 @@ TODO
 
 theres a bunch of other ways with their own tradeoffs
 
-some links
+** cider
+bash-shebang-underscore-hack.clj includes deps in the script, which is
+convenient, but the clj tools and cider wants them in a deps.edn file,
+so atm 2 copies of deps.edn are needed.
+
+** references
 
 
 
