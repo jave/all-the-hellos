@@ -95,7 +95,7 @@ then
             fi
             ;;
         go)
-            codefile=${codebasename/-/_}.clj
+            codefile=${codebasename//-/_}.go
             if [ $1 == "test" ]
             then
                 # https://stackoverflow.com/questions/67306638/go-test-results-in-go-cannot-find-main-module-but-found-git-config-in-users
@@ -104,6 +104,23 @@ then
             elif [ $1 == "submit" ]
             then
                 exercism submit $codefile
+            elif [ $1 == "repl" ]
+            then
+                # go install github.com/x-motemen/gore/cmd/gore@latest
+                gore
+            fi
+            ;;
+        julia)
+            codefile=$codebasename.jl
+            if [ $1 == "test" ]
+            then
+                julia runtests.jl
+            elif [ $1 == "submit" ]
+            then
+                exercism submit $codefile
+            elif [ $1 == "repl" ]
+            then
+                julia
             fi
             ;;
         java)
@@ -134,7 +151,35 @@ then
                 
             fi
             ;;
-        #wasm: npm test
+        perl5)
+            codefile=${codebasename}.pm
+            if [ $1 == "test" ]
+            then
+                prove .
+            elif [ $1 == "submit" ]
+            then
+                exercism submit $codefile
+                #echo hmm
+                #codefile=$(find src/main/java -type f)
+                #exercism submit $codefile
+                
+            fi
+            ;;
+        clojurescript)
+            codefile=${codebasename}.pm
+            if [ $1 == "test" ]
+            then
+                clojure -A:test
+            elif [ $1 == "submit" ]
+            then
+                codefile=$(find src -type f)
+                exercism submit $codefile
+                #echo hmm
+                #codefile=$(find src/main/java -type f)
+                #exercism submit $codefile
+                
+            fi
+            ;;
 
     esac
     
