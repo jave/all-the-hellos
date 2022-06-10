@@ -1,0 +1,28 @@
+run some examples from the tekton tutorial.
+
+wget https://raw.githubusercontent.com/tektoncd/pipeline/master/docs/tutorial.md
+
+you need
+fedora 30
+an openshift cluster with tekton.
+
+sudo dnf install origin-clients
+  588  sudo dnf copr enable chmouel/tektoncd-cli
+  589  sudo dnf install tektoncd-cli
+
+oc login
+
+oc apply -f hello-world.yaml
+oc apply -f echo-hello-world.yaml
+
+  592  tkn task list
+  593  tkn taskrun list
+
+  616  tkn taskrun logs echo-hello-world-task-run
+
+so far we made a ubuntu image echo hello world to a logfile, and we
+could read this with the tkn convenience command.
+
+* tekton dashboard
+kubectl apply --filename https://github.com/tektoncd/dashboard/releases/download/v0.2.0/release.yaml
+need to edit this yaml to remove oauth image hash.
